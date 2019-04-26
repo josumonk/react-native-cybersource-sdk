@@ -44,12 +44,12 @@ RCT_EXPORT_METHOD(
 }
 
 RCT_EXPORT_METHOD(
-    profileRequest:(NSArray *)attributes
+    profileRequest:(NSString *)sessionId
     resolver:(RCTPromiseResolveBlock)resolve
     rejecter:(RCTPromiseRejectBlock)reject
 ) {
     [_defender doProfileRequestWithOptions:@{
-        THMCustomAttributes: attributes,
+        THMSessionID: sessionId,
     } andCallbackBlock:^(NSDictionary *result) {
         THMStatusCode statusCode = [[result valueForKey:THMProfileStatus] integerValue];
         resolve(@{
