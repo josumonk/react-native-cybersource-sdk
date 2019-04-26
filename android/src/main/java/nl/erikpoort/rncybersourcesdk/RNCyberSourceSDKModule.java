@@ -63,24 +63,13 @@ class RNCyberSourceSDKModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void profileRequest(final ReadableArray attributes, final Promise promise) {
+    public void profileRequest(final String sessionId, final Promise promise) {
         if (_defender == null) {
             promise.reject(CYBERSOURCE_SDK, "CyberSource SDK is not yet initialised");
             return;
         }
 
-        List<String> list = new ArrayList<>();
-
-        int leni = attributes.size();
-        for (int i = 0; i < leni; ++i) {
-            String value = attributes.getString(i);
-            if (value != null) {
-                list.add(value);
-            }
-        }
-
-        ProfilingOptions options = new ProfilingOptions().setCustomAttributes(list);
-        TrustDefender.getInstance().doProfileRequest(options, new CompletionNotifier(promise));
+        TrustDefender.getInstance().doProfileRequest(sessionId, new CompletionNotifier(promise));
     }
 
     private class CompletionNotifier implements EndNotifier {
